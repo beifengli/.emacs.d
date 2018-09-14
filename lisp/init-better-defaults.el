@@ -1,0 +1,70 @@
+
+;;启用自动括号匹配
+(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+
+
+ ;; 窗口跳转
+;;(package-install 'window-numbering)
+(global-set-key (kbd "M-o") 'ace-window)
+
+;; 目录增强
+;;(package-install 'dired+)
+
+;; 快速打开配置文件
+(defun open-init-file()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+;;Emacs 自动加载外部修改过的文件
+(global-auto-revert-mode 1)
+
+
+;;关闭自己生产的保存文件
+(setq auto-save-default nil)
+
+;;Dired Mode
+(setq dired-recursive-deletes 'always)
+(setq dired-recursive-copies 'always)
+
+
+;;让 Emacs 重用唯一的一个缓冲区作为 Dired Mode 显示专用缓冲区
+(put 'dired-find-alternate-file 'disabled nil)
+;; 主动加载 Dired Mode
+;; (require 'dired)
+;; (defined-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+
+;; 延迟加载
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+
+;;启用 dired-x 可以让每一次进入 Dired 模式时，使用新的快捷键 C-x C-j 就可以进 入当前文件夹的所在的路径
+(require 'dired-x)
+
+;;----------------------------------------------------------------------------
+;; 安装auto-complete
+;;----------------------------------------------------------------------------
+ ;;导入auto-complete存放位置，auto-complete-master是文件名
+(add-to-list 'load-path "~/.emacs.d/plugins/auto-complete-master")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/plugins/auto-complete-maste/ac-dict")
+(ac-config-default)
+(setq ac-use-quick-help nil)
+(setq ac-auto-start 2) ;; 输入2个字符才开始补全
+(global-set-key "\M-/" 'auto-complete)  ;; 补全的快捷键，用于需要提前补全
+;; Show menu 0.8 second later
+(setq ac-auto-show-menu 0.8)
+
+;;yasnippet
+(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(setq yas/prompt-functions 
+  '(yas/dropdown-prompt yas/x-prompt yas/completing-prompt yas/ido-prompt yas/no-prompt))
+(yas/global-mode 1)
+(yas/minor-mode-on) ; 以minor mode打开，这样才能配合主mode使用
+
+(add-to-list 'load-path "~/.emacs.d/plugins/ecb")
+(require 'ecb)
+
+
+;; 文件末尾
+(provide 'init-better-defaults)

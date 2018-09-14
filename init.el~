@@ -1,0 +1,30 @@
+(package-initialize)
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;; Package Management
+;; -----------------------------------------------------------------
+(require 'init-packages)
+
+(require 'init-ui)
+
+(require 'init-better-defaults)
+
+
+
+;; 最近文件
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-item 10)
+
+(require 'init-keybindings)
+
+
+
+
+	 
+;;(require 'package)
+;;(add-to-list 'package-archives
+;;             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;(package-initialize)
+
